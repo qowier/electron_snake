@@ -1,5 +1,4 @@
 # Mini Snake
-
 ## Description
 
 Testing ElectronJS for desktop app using JavaScript.
