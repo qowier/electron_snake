@@ -26,6 +26,20 @@ var snake = [
 	{x: gameWidth / 2, y: gameHeight / 2}
 ];
 
+Keyboard.Keymap = {
+  // Arrow keys
+  37: 'left',
+  38: 'up',
+  39: 'right',
+  40: 'down',
+
+  // WASD keys
+  65: 'left',  // 'a' key
+  87: 'up',    // 'w' key
+  68: 'right', // 'd' key
+  83: 'down'   // 's' key
+};
+
 function gameStart(){
 	running= true;
 	scoreDisplay.textContent = "Score: " + score;
@@ -83,3 +97,4 @@ document.addEventListener('DOMContentLoaded', (event) => {
   });
 });
 
+document.addEventListener('keydown', changeDirection);
