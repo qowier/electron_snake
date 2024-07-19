@@ -1,7 +1,7 @@
 {
   "name": "mini_snake_js_tester",
   "version": "0.1",
-  "description": "A simple snake game",
+  "description": "A simple snake game exploring building in electron",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
