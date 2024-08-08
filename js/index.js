@@ -66,6 +66,7 @@ function nextTick(){
 		}, 16); //16ms = 60fps
 	}
 	else{
+		clearBoard();
 		endGame();
 		return;
 	}
@@ -98,8 +99,10 @@ function moveSnake() {
 function drawSnake() {
 	ctx.fillStyle = snakeColour;
 	ctx.strokeStyle = snakeBorder;
-	ctx.fillRect(snakePart.x, snakePart.y, unitSz, unitSz);
-	ctx.strokeRect(snakePart.x, snakePart.y, unitSz, unitSz);
+	snake.forEach(snakePart => {
+		ctx.fillRect(snakePart.x, snakePart.y, unitSz, unitSz);
+		ctx.strokeRect(snakePart.x, snakePart.y, unitSz, unitSz);
+	});
 }
 
 function changeDirection(event) {
@@ -111,6 +114,7 @@ function checkGameOver(){
 }
 
 function resetGame(){
+	running = false;
 	score = 0;
 	xVelocity = unitSz;
 	yVelocity = 0;
@@ -121,7 +125,6 @@ function resetGame(){
 		{x: gameWidth / 2 + unitSz, y: gameHeight / 2},
 		{x: gameWidth / 2, y: gameHeight / 2}
 	];
-	clearBoard();
 }
 
 function endGame() {
