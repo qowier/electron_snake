@@ -48,7 +48,7 @@ function gameStart(){
 		running = false;
 	}
 	running = true;
-	scoreDisplay.textContent = "Score: " + score;
+	scoreDisplay.textContent = `Score: ${score}`;
 	randomizeFood();
 	drawFood();
 	nextTick();
@@ -93,27 +93,19 @@ function drawFood(){
 }
 
 function moveSnake() {
-	const head = {x: snake[0].x + xVelocity, y: snake[0].y + yVelocity};
+	const head = {
+		x: (snake[0].x + xVelocity + gameWidth) % gameWidth,
+		y: (snake[0].y + yVelocity + gameHeight) % gameHeight
+	};
 	snake.unshift(head);
 
 	//check if snake ate food
 	if (snake[0].x === xFood && snake[0].y === yFood) {
-		score += 1;
-		scoreDisplay.textContent = "Score: " + score;
+		score++;
+		scoreDisplay.textContent = `Score: ${score}`;
 		randomizeFood();
 	} else {
 		snake.pop();
-	}
-
-	//make snake loop around the arena
-	if (snake[0].x > gameWidth) {
-		snake[0].x = 0;
-	} else if (snake[0].x < 0) {
-		snake[0].x = gameWidth;
-	} else if (snake[0].y > gameHeight) {
-		snake[0].y = 0;
-	} else if (snake[0].y < 0) {
-		snake[0].y = gameHeight;
 	}
 }
 
