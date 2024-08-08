@@ -1,9 +1,12 @@
-const gameContainer = document.getElementById('#gameContainer');
+const gameContainer = document.querySelector('#gameContainer');
 const gameBoard = document.querySelector("#gameBoard");
 const ctx = gameBoard.getContext('2d');
-const scoreDisplay = document.querySelector("#score");
+const scoreDisplay = document.querySelector("#scoreDisplay");
 const startGameBtn = document.querySelector("#startGameBtn");
 const resetBtn = document.querySelector("#resetGameBtn");
+
+///TESTING. REMOVE AFTER
+const endGameBtn = document.querySelector("#gameOverBtn");
 const gameWidth = gameBoard.width;
 const gameHeight = gameBoard.height;
 const snakeColour = "lightgreen";
@@ -37,51 +40,95 @@ Keyboard.Keymap = {
   65: 'left',  // 'a' key
   87: 'up',    // 'w' key
   68: 'right', // 'd' key
-  83: 'down'   // 's' key
+  83: 'down'   // 's' key~
 };
 
 function gameStart(){
 	running= true;
 	scoreDisplay.textContent = "Score: " + score;
-	createFood();
+	randomizeFood();
 	drawFood();
 	nextTick();
 };
+
+function nextTick(){
+	if(running){
+		setTimeout(()=>{
+			clearBoard();
+			drawFood();
+			//moveSnake();
+			//drawSnake();
+			checkGameOver();
+			nextTick();
+		}, 16); //16ms = 60fps
+	}
+	else{
+		endGame();
+		return;
+	}
+}
+
+function clearBoard(){
+	ctx.fillStyle = "black";
+	ctx.fillRect(0, 0, gameWidth, gameHeight);
+}
+
+function randomizeFood(){
+	function randomFood(min, max){
+		const randNum = Math.round((Math.random() * (max - min) + min) / unitSz) * unitSz;
+		return randNum;
+	}
+	xFood = randomFood(0, gameWidth - unitSz);
+	yFood = randomFood(0, gameHeight - unitSz);
+};
+
+function drawFood(){
+	ctx.fillStyle = foodColour;
+	ctx.fillRect(xFood, yFood, unitSz, unitSz);
+
+}
 
 function moveSnake() {
 	//TODO
 }
 
-function changeDirection(event) {
-	//TODO
-}
-
-
-function drawSnakePart(snakePart) {
+function drawSnake() {
 	ctx.fillStyle = snakeColour;
 	ctx.strokeStyle = snakeBorder;
 	ctx.fillRect(snakePart.x, snakePart.y, unitSz, unitSz);
 	ctx.strokeRect(snakePart.x, snakePart.y, unitSz, unitSz);
 }
 
+function changeDirection(event) {
+	//TODO
+}
 
-function generateFood() {
-	xFood = Math.floor(Math.random() * gameWidth / unitSz) * unitSz;
-	yFood = Math.floor(Math.random() * gameHeight / unitSz) * unitSz;
-	snake.forEach(function isFoodOnSnake(part) {
-		const foodIsOnSnake = part.x == xFood && part.y == yFood;
-		if (foodIsOnSnake)
-			generateFood();
-	});
+function checkGameOver(){
+	//TODO
 }
 
 function resetGame(){
-	//TODO
+	score = 0;
+	xVelocity = unitSz;
+	yVelocity = 0;
+	snake = [
+		{x: gameWidth / 2 + unitSz * 4, y: gameHeight / 2},
+		{x: gameWidth / 2 + unitSz * 3, y: gameHeight / 2},
+		{x: gameWidth / 2 + unitSz * 2, y: gameHeight / 2},
+		{x: gameWidth / 2 + unitSz, y: gameHeight / 2},
+		{x: gameWidth / 2, y: gameHeight / 2}
+	];
+	gameStart();
 }
 
 function endGame() {
-	//TODO
-}
+	alert("game over");
+	ctx.font = "Permanent Marker", cursive;
+	ctx.fillStyle = "black";
+	ctx.textAlign = "center";
+	ctx.fillText("GAME OVER!", gameWidth / 2, gameHeight / 2);
+	running = false;
+};
 
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -89,12 +136,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
   startGameBtn.addEventListener('click', () => {
 		running = true;
     console.log('Start button clicked!');
+		gameStart();
   });
 	const resetGameBtn = document.getElementById('resetGameBtn');
-  resetGameBtn.addEventListener('click', () => {
-		
-      console.log('Reset button clicked!');
+  	resetGameBtn.addEventListener('click', () => {
+    console.log('Reset button clicked!');
+		resetGame();
   });
+
+
+	///BUTTON FOR TESTING. REMOVE AFTER.
+	const gameOverBtn = document.getElementById('gameOverBtn');
+		endGameBtn.addEventListener('click', () => {
+			alert("End game clicked~");
+			endGame();
+	});
 });
 
 document.addEventListener('keydown', changeDirection);
+
+

@@ -9,7 +9,7 @@ Testing ElectronJS for desktop app using JavaScript.
 
 ### Installing
 
-* TBD
+* run command ```npm i electron``` to install electron
 
 ### Executing program
 
