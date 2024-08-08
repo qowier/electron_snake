@@ -121,10 +121,38 @@ function drawSnake() {
 }
 
 function changeDirection(event) {
-	//TODO
+	const keyPressed = event.keyCode;
+	const direction = Keyboard.Keymap[keyPressed];
+
+	const up = (yVelocity == -unitSz);
+	const down = (yVelocity == unitSz);
+	const left = (xVelocity == -unitSz);
+	const right = (xVelocity == unitSz);
+
+	switch(direction){
+		case "up":
+			if(down) return;
+			xVelocity = 0;
+			yVelocity = -unitSz;
+			break;
+		case "down":
+			if(up) return;
+			xVelocity = 0;
+			yVelocity = unitSz;
+			break;
+		case "left":
+			if(right) return;
+			xVelocity = -unitSz;
+			yVelocity = 0;
+			break;
+		case "right":
+			if(left) return;
+			xVelocity = unitSz;
+			yVelocity = 0;
+			break;
+	}
 }
 
-//TODO, test this function.
 function checkGameOver(){
 	snake.forEach((snakePart, index) => {
 		if (index === 0) {
@@ -149,6 +177,7 @@ function resetGame(){
 		{x: gameWidth / 2 + unitSz, y: gameHeight / 2},
 		{x: gameWidth / 2, y: gameHeight / 2}
 	];
+	scoreDisplay.textContent = `Score: ${score}`;
 }
 
 function endGame() {
@@ -162,18 +191,18 @@ function endGame() {
 
 document.addEventListener('DOMContentLoaded', (event) => {
   const startGameBtn = document.getElementById('startGameBtn');
+  const resetGameBtn = document.getElementById('resetGameBtn');
+
   startGameBtn.addEventListener('click', () => {
-		running = true;
+    running = true;
     console.log('Start button clicked!');
-		gameStart();
+    gameStart();
   });
-	const resetGameBtn = document.getElementById('resetGameBtn');
-  	resetGameBtn.addEventListener('click', () => {
+
+  resetGameBtn.addEventListener('click', () => {
     console.log('Reset button clicked!');
-		resetGame();
+    resetGame();
   });
+
+  document.addEventListener('keydown', changeDirection);
 });
-
-document.addEventListener('keydown', changeDirection);
-
-
