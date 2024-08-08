@@ -5,8 +5,6 @@ const scoreDisplay = document.querySelector("#scoreDisplay");
 const startGameBtn = document.querySelector("#startGameBtn");
 const resetBtn = document.querySelector("#resetGameBtn");
 
-///TESTING. REMOVE AFTER
-const endGameBtn = document.querySelector("#gameOverBtn");
 const gameWidth = gameBoard.width;
 const gameHeight = gameBoard.height;
 const snakeColour = "lightgreen";
@@ -44,7 +42,12 @@ Keyboard.Keymap = {
 };
 
 function gameStart(){
-	running= true;
+	//force restart game if Start button is re-clicked
+	if (running) {
+		resetGame();
+		running = false;
+	}
+	running = true;
 	scoreDisplay.textContent = "Score: " + score;
 	randomizeFood();
 	drawFood();
@@ -56,8 +59,8 @@ function nextTick(){
 		setTimeout(()=>{
 			clearBoard();
 			drawFood();
-			//moveSnake();
-			//drawSnake();
+			moveSnake();
+			drawSnake();
 			checkGameOver();
 			nextTick();
 		}, 16); //16ms = 60fps
@@ -118,13 +121,12 @@ function resetGame(){
 		{x: gameWidth / 2 + unitSz, y: gameHeight / 2},
 		{x: gameWidth / 2, y: gameHeight / 2}
 	];
-	gameStart();
+	clearBoard();
 }
 
 function endGame() {
-	alert("game over");
-	ctx.font = "Permanent Marker", cursive;
-	ctx.fillStyle = "black";
+	ctx.font = "60px comic sans ms";
+	ctx.fillStyle = "white";
 	ctx.textAlign = "center";
 	ctx.fillText("GAME OVER!", gameWidth / 2, gameHeight / 2);
 	running = false;
@@ -143,14 +145,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     console.log('Reset button clicked!');
 		resetGame();
   });
-
-
-	///BUTTON FOR TESTING. REMOVE AFTER.
-	const gameOverBtn = document.getElementById('gameOverBtn');
-		endGameBtn.addEventListener('click', () => {
-			alert("End game clicked~");
-			endGame();
-	});
 });
 
 document.addEventListener('keydown', changeDirection);
