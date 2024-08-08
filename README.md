@@ -1,7 +1,7 @@
-# Mini Snake
+# Snake in Electron
 ## Description
 
-Testing ElectronJS for desktop app using JavaScript.
+Snake clone using Javascript and ElectronJS.
 
 ### Dependencies
 
@@ -9,7 +9,8 @@ Testing ElectronJS for desktop app using JavaScript.
 
 ### Installing
 
-* run command ```npm i electron``` to install electron
+* Ensure node version is at least v20.12.0.
+* Run command ```npm i electron``` to install electron.
 
 ### Executing program
 
@@ -17,7 +18,7 @@ Testing ElectronJS for desktop app using JavaScript.
 
 ## Help
 
-* Nothing here for now
+* To check if you have node, run ```node -v``` in terminal.
 
 ## Version History
 
