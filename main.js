@@ -13,7 +13,7 @@ function createWindow() {
       contextIsolation: false,
 		},
 	});
-
+	mainWindow.setMenuBarVisibility(false)
 	mainWindow.loadFile('index.html');
 
 	mainWindow.on('closed', function () {
