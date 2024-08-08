@@ -63,7 +63,7 @@ function nextTick(){
 			drawSnake();
 			checkGameOver();
 			nextTick();
-		}, 16); //16ms = 60fps
+		}, 67); //66.67ms = 15fps
 	}
 	else{
 		clearBoard();
@@ -93,7 +93,28 @@ function drawFood(){
 }
 
 function moveSnake() {
-	//TODO
+	const head = {x: snake[0].x + xVelocity, y: snake[0].y + yVelocity};
+	snake.unshift(head);
+
+	//check if snake ate food
+	if (snake[0].x === xFood && snake[0].y === yFood) {
+		score += 1;
+		scoreDisplay.textContent = "Score: " + score;
+		randomizeFood();
+	} else {
+		snake.pop();
+	}
+
+	//make snake loop around the arena
+	if (snake[0].x > gameWidth) {
+		snake[0].x = 0;
+	} else if (snake[0].x < 0) {
+		snake[0].x = gameWidth;
+	} else if (snake[0].y > gameHeight) {
+		snake[0].y = 0;
+	} else if (snake[0].y < 0) {
+		snake[0].y = gameHeight;
+	}
 }
 
 function drawSnake() {
