@@ -99,6 +99,8 @@ function moveSnake() {
 	};
 	snake.unshift(head);
 
+	checkGameOver();
+
 	//check if snake ate food
 	if (snake[0].x === xFood && snake[0].y === yFood) {
 		score++;
@@ -122,9 +124,18 @@ function changeDirection(event) {
 	//TODO
 }
 
+//TODO, test this function.
 function checkGameOver(){
-	//TODO
-}
+	snake.forEach((snakePart, index) => {
+		if (index === 0) {
+			return;
+		}
+		if (snakePart.x === snake[0].x && snakePart.y === snake[0].y) {
+			endGame();
+			return;
+		}
+	});
+};
 
 function resetGame(){
 	running = false;
