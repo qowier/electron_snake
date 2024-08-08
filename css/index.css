@@ -6,7 +6,8 @@
   body { background: #ddd; color: black; }
 }
 
-#gameContainer{
+
+#gameContainer, #btn-container{
   text-align: center;
 }
 

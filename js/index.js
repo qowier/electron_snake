@@ -8,6 +8,7 @@ const resetBtn = document.querySelector("#resetGameBtn");
 const gameWidth = gameBoard.width;
 const gameHeight = gameBoard.height;
 const snakeColour = "lightgreen";
+const snakeHeadColour = "green";
 const snakeBorder = "darkgreen";
 const foodColour = "red";
 const foodBorder = "darkred";
@@ -114,7 +115,13 @@ function moveSnake() {
 function drawSnake() {
 	ctx.fillStyle = snakeColour;
 	ctx.strokeStyle = snakeBorder;
-	snake.forEach(snakePart => {
+	
+	snake.forEach((snakePart, index) => {
+		if (index === 0) {
+			ctx.fillStyle = snakeHeadColour;
+		} else {
+			ctx.fillStyle = snakeColour;
+		}
 		ctx.fillRect(snakePart.x, snakePart.y, unitSz, unitSz);
 		ctx.strokeRect(snakePart.x, snakePart.y, unitSz, unitSz);
 	});
